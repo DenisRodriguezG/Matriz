@@ -8,9 +8,9 @@ namespace Matriz
         {
             cMatriz M1 = new cMatriz(3, 3);
             M1.ingresar();
-            Console.WriteLine(M1);
-            M1.determinante();
-
+            
+            M1.Determinante2();
+            //2 0 5 -7 1 2 4 4 -3
         }
     }
 }

@@ -389,5 +389,45 @@ namespace Matriz
             determinanteTotal = p1V + p2V + p3V - r1V - r2V - r3V;
             Console.WriteLine(determinanteTotal);
         }
+        public int Determinante2()
+        {
+            cMatriz Temp = new cMatriz(nRenglones, nColumnas * 2, "Temporal");
+
+            for (int i = 0; i < nRenglones; i++)
+                for (int j = 0; j < nRenglones; j++)
+                    Temp.Tabla[i, j] = Tabla[i, j];
+
+            for (int i = 0; i < nRenglones; i++)
+                for (int j = nRenglones; j < (nColumnas * 2); j++)
+                    Temp.Tabla[i, j] = Tabla[i, j - nRenglones];
+
+            //Operación suma
+            int acomulaMulti, det = 0, k;
+            for (int i = 0; i < nRenglones; i++)
+            {
+                acomulaMulti = 1;
+                k = i;
+                for (int j = 0; j < nRenglones; j++, k++)
+                {
+                    acomulaMulti *= Temp.Tabla[j, k];
+                    
+                }
+                det += acomulaMulti;
+            }
+
+            //Operación resta
+            for (int i = 0; i < nRenglones; i++)
+            {
+                acomulaMulti = 1;
+                k = i;
+                for (int j = (nRenglones - 1); j >= 0; j--, k++)
+                {
+                    acomulaMulti *= Temp.Tabla[j, k];
+
+                }
+                det -= acomulaMulti;
+            }   
+            return det;
+        }
     }
 }
