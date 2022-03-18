@@ -403,31 +403,91 @@ namespace Matriz
 
             //Operación suma
             int acomulaMulti, det = 0, k;
-            for (int i = 0; i < nRenglones; i++)
+            int p1V = 0;
+            int p2V = 0;
+            if (nRenglones == 2) 
             {
-                acomulaMulti = 1;
-                k = i;
-                for (int j = 0; j < nRenglones; j++, k++)
+                for (int i = 1; i < nRenglones; i++)
                 {
-                    acomulaMulti *= Temp.Tabla[j, k];
-                    
+                    int clave = i - 1;
+                    for (int j = 0; j < nColumnas; j++)
+                    {
+                        if (i == 1 && j == 1)
+                        {
+                            p1V = Tabla[clave, 0] * Tabla[i, j];
+                        }
+                        if (i == 1 && j == 0)
+                        {
+                            p2V = Tabla[clave, 1] * Tabla[i, j];
+                        }
+                    }
                 }
-                det += acomulaMulti;
+                det = p1V - p2V;
+                        }
+            else
+            {
+                for (int i = 0; i < nRenglones; i++)
+                {
+                    acomulaMulti = 1;
+                    k = i;
+                    for (int j = 0; j < nRenglones; j++, k++)
+                    {
+                        acomulaMulti *= Temp.Tabla[j, k];
+
+                    }
+                    det += acomulaMulti;
+                }
+
+                //Operación resta
+                for (int i = 0; i < nRenglones; i++)
+                {
+                    acomulaMulti = 1;
+                    k = i;
+                    for (int j = (nRenglones - 1); j >= 0; j--, k++)
+                    {
+                        acomulaMulti *= Temp.Tabla[j, k];
+
+                    }
+                    det -= acomulaMulti;
+                }
             }
-
-            //Operación resta
-            for (int i = 0; i < nRenglones; i++)
-            {
-                acomulaMulti = 1;
-                k = i;
-                for (int j = (nRenglones - 1); j >= 0; j--, k++)
-                {
-                    acomulaMulti *= Temp.Tabla[j, k];
-
-                }
-                det -= acomulaMulti;
-            }   
             return det;
+        }
+        public int MenorComplementario(int Aii, int Ajj)
+        {
+            int Ai = (Aii - 1);
+            int Aj = (Ajj - 1);
+            cMatriz MCA = new cMatriz(nRenglones - 1, nColumnas - 1, "Menor Complementario");
+            int inc = 0;
+            int jin = 0;
+            bool findIt = true;
+            if (Ai < 0 || Aj < 0)
+                return 0;
+            if (Ai >= nRenglones || Aj >= nColumnas)
+                return 0;
+            for(int i = 0; i < nRenglones; i++)
+            {
+                Console.WriteLine("inc -> " + inc);
+
+                findIt = false;
+                for (int j = 0; j < nColumnas; j++)
+                    {
+                    
+                        if (i != Ai && j != Aj)
+                        {
+                            Console.WriteLine(Tabla[i, j]);
+                            MCA.Tabla[inc, jin] = Tabla[i, j];//MCA.Tabla[inc++, jin++] = Tabla[i, j];
+                        findIt = true;
+                            jin++;
+                        }
+                    }
+                if (findIt)
+                    inc = inc + 1;
+                
+                jin = 0;
+            }
+            Console.WriteLine(MCA);
+            return MCA.Determinante2();
         }
     }
 }
